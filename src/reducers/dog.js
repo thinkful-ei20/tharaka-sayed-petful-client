@@ -1,7 +1,7 @@
 import { FETCH_DOG_SUCCESS, FETCH_DOG_ERROR } from '../actions/';
 
 const initialState = {
-    dog: null,
+    data: null,
     error: null,
     loading: false
 };
