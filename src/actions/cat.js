@@ -18,17 +18,18 @@ const fetchCatError = (error) => ({
 })
 
 export const fetchCat = () => (dispatch) => {
+  dispatch(fetchCatRequest())
   fetch(`${API_BASE_URL}/api/cat`)
-    .then(res => res.json)
+    .then(res => res.json())
     .then(cat => dispatch(fetchCatSuccess(cat)))
     .catch(error => dispatch(fetchCatError(error)))
 }
 
-export const adoptCat = id => dispatch => {
+export const adoptCat = () => dispatch => {
   dispatch(fetchCatRequest())
-  fetch(`${API_BASE_URL}/api/dat/${id}`, {
+  fetch(`${API_BASE_URL}/api/cat`, {
     method: 'DELETE'
   })
-  .then(() => dispatch(fetchCat))
+  .then(() => dispatch(fetchCat()))
   .catch(error => dispatch(fetchCatError(error)))
 }

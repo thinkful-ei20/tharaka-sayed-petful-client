@@ -20,15 +20,16 @@ const fetchDogError = (error) => ({
 export const fetchDog = () => (dispatch) => {
   dispatch(fetchDogRequest())
   fetch(`${API_BASE_URL}/api/dog`)
-    .then(res => res.json)
+    .then(res => res.json())
     .then(dog => dispatch(fetchDogSuccess(dog)))
     .catch(error => dispatch(fetchDogError(error)))
 }
 
-export const adoptDog = id => dispatch => {
-  fetch(`${API_BASE_URL}/api/dog/${id}`, {
+export const adoptDog = () => dispatch => {
+  dispatch(fetchDogRequest())
+  fetch(`${API_BASE_URL}/api/dog`, {
     method: 'DELETE'
   })
-  .then(() => dispatch(fetchDog))
+  .then(() => dispatch(fetchDog()))
   .catch(error => dispatch(fetchDogError(error)))
 }

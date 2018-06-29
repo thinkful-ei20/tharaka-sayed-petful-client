@@ -1,20 +1,37 @@
-import { FETCH_CAT_SUCCESS, FETCH_CAT_ERROR } from '../actions/';
+import { FETCH_CAT_SUCCESS, FETCH_CAT_ERROR, FETCH_CAT_REQUEST } from '../actions/';
 
 const initialState = {
-    data: null,
+    cats: [],
     error: null,
     loading: false
 };
 
-export default function reducer(state = initialState, action) {
-    if (action.type === FETCH_CAT_SUCCESS) {
-        return Object.assign({}, state, {
-            cat: action.cat
-        });
-    } else if(action.type === FETCH_CAT_ERROR) {
-        return Object.assign({}, state, {
-            error: action.error
-        });
-    } 
-    return state;
+const catReducer = (state = initialState, action) => {
+    switch (action.type) {
+        case FETCH_CAT_REQUEST:
+            return {
+                ...state,
+                loading: true
+            }
+
+        case FETCH_CAT_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                error: false,
+                cats: action.cat
+            }
+
+        case FETCH_CAT_ERROR:
+            return {
+                ...state,
+                loading: false,
+                error: action.error
+            }
+        
+        default:
+            return state
+    }
 }
+
+export default catReducer

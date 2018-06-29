@@ -1,20 +1,37 @@
-import { FETCH_DOG_SUCCESS, FETCH_DOG_ERROR } from '../actions/';
+import { FETCH_DOG_SUCCESS, FETCH_DOG_ERROR, FETCH_DOG_REQUEST } from '../actions/';
 
 const initialState = {
-    data: null,
+    dogs: [],
     error: null,
     loading: false
 };
 
-export default function reducer(state = initialState, action) {
-    if (action.type === FETCH_DOG_SUCCESS) {
-        return Object.assign({}, state, {
-            dog: action.dog
-        });
-    } else if(action.type === FETCH_DOG_ERROR) {
-        return Object.assign({}, state, {
-            error: action.error
-        });
-    } 
-    return state;
+const dogReducer = (state = initialState, action) => {
+    switch(action.type) {
+        case FETCH_DOG_REQUEST:
+            return {
+                ...state,
+                loading: true
+            }
+
+        case FETCH_DOG_SUCCESS: 
+            return {
+                ...state,
+                loading: false,
+                error: false,
+                dogs: action.dog
+            }
+        
+        case FETCH_DOG_ERROR:
+            return {
+                ...state,
+                loading: false,
+                error: action.error
+            }
+
+        default:
+            return state
+    }
 }
+
+export default dogReducer
