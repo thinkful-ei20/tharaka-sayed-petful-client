@@ -27,7 +27,7 @@ export const fetchDog = () => (dispatch) => {
 
 export const adoptDog = () => dispatch => {
   dispatch(fetchDogRequest())
-  fetch(`${API_BASE_URL}/api/dog`, {
+  return fetch(`${API_BASE_URL}/api/dog`, {
     method: 'DELETE'
   })
   .then(() => dispatch(fetchDog()))
