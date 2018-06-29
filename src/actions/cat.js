@@ -21,15 +21,24 @@ export const fetchCat = () => (dispatch) => {
   dispatch(fetchCatRequest())
   fetch(`${API_BASE_URL}/api/cat`)
     .then(res => res.json())
-    .then(cat => dispatch(fetchCatSuccess(cat)))
+    .then(cat => {
+      console.log('cats fetched')
+      dispatch(fetchCatSuccess(cat))
+    })
     .catch(error => dispatch(fetchCatError(error)))
 }
 
 export const adoptCat = () => dispatch => {
   dispatch(fetchCatRequest())
-  fetch(`${API_BASE_URL}/api/cat`, {
+  return fetch(`${API_BASE_URL}/api/cat`, {
     method: 'DELETE'
   })
-  .then(() => dispatch(fetchCat()))
-  .catch(error => dispatch(fetchCatError(error)))
+  .then(() => {
+    console.log('fetching next cat')
+    dispatch(fetchCat())
+  })
+  .catch(error => {
+    console.log('errored')
+    dispatch(fetchCatError(error))
+  })
 }
