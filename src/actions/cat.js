@@ -1,5 +1,10 @@
 import {API_BASE_URL} from '../config'
 
+export const FETCH_CAT_REQUEST = 'FETCH_CAT_REQUEST'
+const fetchCatRequest = () => ({
+  type: FETCH_CAT_REQUEST
+})
+
 export const FETCH_CAT_SUCCESS = 'FETCH_CAT_SUCCESS'
 const fetchCatSuccess = (cat) => ({
   type: FETCH_CAT_SUCCESS,
@@ -17,4 +22,13 @@ export const fetchCat = () => (dispatch) => {
     .then(res => res.json)
     .then(cat => dispatch(fetchCatSuccess(cat)))
     .catch(error => dispatch(fetchCatError(error)))
+}
+
+export const adoptCat = id => dispatch => {
+  dispatch(fetchCatRequest())
+  fetch(`${API_BASE_URL}/api/dat/${id}`, {
+    method: 'DELETE'
+  })
+  .then(() => dispatch(fetchCat))
+  .catch(error => dispatch(fetchCatError(error)))
 }
